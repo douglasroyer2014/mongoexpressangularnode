@@ -1,0 +1,39 @@
+ver todos dbs
+show dbs
+
+uasr dbs
+use "nome_db"
+
+ver suas collections
+show collections
+
+inserir documento
+db.nomedacolection.insert()
+db.nomedacolection.save()
+
+consultar documento
+db.nomedacolection.find()
+db.nomedacolection.find().pretty()
+db.nomedacolection.findOne()
+db.nomedacolection.find(<expression>)//{mont: 2} //{$or:[{mont:2},{monyh:1}]} //{credits:{$exists:true}}
+.skip() //pular 1
+.limit(1) //limitar uma consultar
+//Agregar uma consulta
+db.billingcycles.aggregate([{
+... $project:{credit:{$sum:"$credits.value"},debt:{$sum:"$debts.value"}},
+... },{
+... $group:{_id:null, credit:{$sum:"$credit"},debt:{$sum:"$debt"}}
+... }])
+
+contar
+db.nomedacolection.count()
+
+//update
+db.billingcycles.update( {$and:[{month: 1},{year:2018}]},
+... {$set:{credits:[{name:"salario", value:5000}]}})
+
+//remover
+.remove({month:2})
+
+//dropa base
+db.dropDatabase()
